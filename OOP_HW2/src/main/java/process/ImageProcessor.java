@@ -10,7 +10,8 @@ public class ImageProcessor {
     public interface Operation {
         BufferedImage execute(BufferedImage image);
     }
-
+	
+	// Было бы так же неплохо задать функцию resize для сжатия изображения в N раз
     public static BufferedImage resize(BufferedImage image, int targetWidth, int targetHeight) {
 
         BufferedImage resultImage = new BufferedImage(targetWidth, targetHeight, image.getType());

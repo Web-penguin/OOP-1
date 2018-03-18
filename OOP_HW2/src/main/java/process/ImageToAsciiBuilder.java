@@ -23,12 +23,14 @@ public class ImageToAsciiBuilder {
     }
 
     private static char getPaletteChar(double g) {
+		// Однобуквенная переменная, число 255 в константу.
         return ASCII_PALETTE.charAt(
                 (int)((g / 255) * (PALETTE_SIZE - 1))
         );
     }
 
     private static double colorToValue(Color pixColor) {
+		// Вынести числа в константы.
         return pixColor.getRed() * 0.30 + pixColor.getBlue() * 0.59 + pixColor.getGreen() * 0.11;
     }
 }

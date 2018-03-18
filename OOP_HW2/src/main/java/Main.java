@@ -13,14 +13,21 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+		// Было бы неплохо дать возможность указывать пути до изображений в аргументах коммандной строки
         BufferedImage img = ImageIO.read(new File(args.length > 0 ? args[0] : "rabbit_divided.jpg"));
         BufferedImage imgParallel = ImageIO.read(new File(args.length > 0 ? args[0] : "rabbit_divided.jpg"));
         String cmd;
         Scanner inputScanner = new Scanner(System.in);
         while ((cmd = inputScanner.nextLine()) != null) {
             String[] parameters = cmd.split(" ");
+			// Однобуквенная переменная
             PartitionedBufferedImage p = new PartitionedBufferedImage(imgParallel);
             List<ImageProcessor.Operation> operations = new ArrayList<>();
+			/*
+			Можно было бы использовать стороннюю библиотеку для парсинга аргументов коммандной строки
+			Например, JCommander, позволило бы упоротить код в разы и смотрелось приятнее.
+			Все строки можно занести в строковые константы.
+			*/
             try {
                 switch (parameters[0]) {
                     case "rotate":

@@ -63,13 +63,16 @@ public class PartitionedBufferedImage {
     public List<BufferedImage> getPartitions() {
         return partitions;
     }
-
+	
+	// Может вынести всю логику нахождения и конструирования линий в отдельный класс?
     private void findLines(List<Integer> xLines, List<Integer> yLines, BufferedImage image) {
+		// Непонятно для чего это, если не смотреть тело функции concatLines, лучше добавить комментарий
         xLines.add(0);
         yLines.add(0);
 
 //        TODO: recognize black color; refactor
         for (int x = 0; x < width; ++x) {
+			// Магическое число -10000, перенести в константу.
             if (image.getRGB(x, 0) < -10000) {
                 boolean flag = true;
                 for (int y = 1; y < height; ++y) {
@@ -83,7 +86,8 @@ public class PartitionedBufferedImage {
                 }
             }
         }
-
+		
+		// Фактически дубликация предыдущего цикла, можно было вынести в функцию с параметром option.
         for (int y = 0; y < height; ++y) {
             if (image.getRGB(0, y) < -10000) {
                 boolean flag = false;
@@ -98,11 +102,13 @@ public class PartitionedBufferedImage {
                 }
             }
         }
-
+		
+		// Непонятно для чего это, если не смотреть тело функции concatLines, лучше добавить комментарий
         xLines.add(width);
         yLines.add(height);
     }
-
+	
+	// 
     private List<Integer> concatLines(List<Integer> lines) {
         List<Integer> result = new ArrayList<>();
         Integer start = lines.get(0);
@@ -111,6 +117,10 @@ public class PartitionedBufferedImage {
         for (; i < lines.size(); ++i) {
             Integer line = lines.get(i);
             if (line != previous + 1) {
+				/*
+				Непонятно почему добавляем середину черной лини
+				Может быть лучше хранить пары {lingBegin: lineEnd}?
+				*/
                 result.add((previous + start) / 2);
                 start = line;
             }
@@ -119,7 +129,8 @@ public class PartitionedBufferedImage {
         result.add(lines.get(i-1));
         return result;
     }
-
+	
+	// Непонтна сигнатура функции с однобуквенными переменными.
     private void addPartition(BufferedImage partition, int x, int y) {
         xOffset.add(x);
         yOffset.add(y);
